@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="La Sonnette — le Comité des Fêtes du Pôle Sup de la Salle, Rennes. Afterworks, Secret Santa et autres débordements festifs organisés par Jean & Sandrine." />
+
+  <!--
+    SÉCURITÉ : Content Security Policy de base.
+    Permet uniquement les ressources de confiance (Google Fonts, Formspree).
+    À adapter si d'autres CDN sont ajoutés en V2.
+  -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self';
+                 style-src 'self' https://fonts.googleapis.com 'unsafe-inline';
+                 font-src 'self' https://fonts.gstatic.com;
+                 img-src 'self' data:;
+                 media-src 'self';
+                 script-src 'self';
+                 form-action https://formspree.io;
+                 connect-src https://formspree.io;" />
+
+  <!-- Google Fonts : Playfair Display (titres) + Nunito (corps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Feuilles de style séparées par responsabilité -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/galerie.css" />
+
+  <title>🔔 La Sonnette — Comité des Fêtes · Pôle Sup de la Salle</title>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       NAVIGATION PRINCIPALE
+       Barre fixe avec ancres vers chaque section.
+       L'attribut aria-label identifie la nav pour les lecteurs d'écran.
+  ═══════════════════════════════════════════════════════════════ -->
+  <header class="entete" role="banner">
+    <nav class="navigation" aria-label="Navigation principale">
+      <a href="#accueil" class="navigation__logo" aria-label="La Sonnette - retour en haut">
+        🔔 <span>La Sonnette</span>
+      </a>
+      <button class="navigation__burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu-principal">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="navigation__liens" id="menu-principal" role="list">
+        <li><a href="#accueil" class="navigation__lien">La base</a></li>
+        <li><a href="#esprit" class="navigation__lien">Qui on est</a></li>
+        <li><a href="#regles" class="navigation__lien">Le règlement</a></li>
+        <li><a href="#galerie" class="navigation__lien">Les preuves</a></li>
+        <li><a href="#bars" class="navigation__lien">Notre labo</a></li>
+        <li><a href="#idees" class="navigation__lien">Ton tour</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="contenu-principal">
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECTION 1 — HERO
+         Grande intro avec fond photo, titre animé et CTA.
+         La photo de fond est chargée en CSS pour éviter le LCP bloquant.
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="hero" id="accueil" aria-label="Accueil La Sonnette">
+      <div class="hero__fond" aria-hidden="true"></div>
+      <div class="hero__contenu">
+        <p class="hero__surtitre">🔔 Comité des Fêtes · de la Salle</p>
+        <h1 class="hero__titre">
+          La récré<br />
+          <em>des profs</em>
+        </h1>
+        <p class="hero__accroche">
+          Organisé par Sandrine, Jean et leurs fidèles camarades :<br />
+          afterworks, Secret Santa et autres débordements festifs.
+        </p>
+        <div class="hero__cta">
+          <a href="#galerie" class="bouton bouton--primaire">
+            📸 Voir les photos
+          </a>
+          <a href="#idees" class="bouton bouton--secondaire">
+            💡 Proposer une idée
+          </a>
+        </div>
+      </div>
+      <!-- Scroll indicator décoratif -->
+      <div class="hero__scroll" aria-hidden="true">
+        <span>↓</span>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECTION 2 — ESPRIT DU COMITÉ
+         Présentation de Jean & Sandrine, ton complice.
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="esprit" id="esprit" aria-labelledby="titre-esprit">
+      <div class="conteneur">
+        <div class="esprit__grille">
+          <div class="esprit__texte apparition">
+            <h2 class="titre-section" id="titre-esprit">
+              🎉 Qui on est<br /><em>(et ce qu'on veut)</em>
+            </h2>
+            <blockquote class="esprit__citation">
+              <p>
+                On est deux profs qui ont décidé de mettre une ambiance de feu.
+                Depuis 2024, on organise des trucs. Parfois ça dérape (dans le bon sens).
+                Vous êtes les bienvenus.
+              </p>
+              <footer>— Sandrine &amp; Jean</footer>
+            </blockquote>
+            <div class="esprit__icones" role="list" aria-label="Types d'événements">
+              <div class="icone-event" role="listitem">
+                <span aria-hidden="true">🍻</span>
+                <span>Afterwork</span>
+              </div>
+              <div class="icone-event" role="listitem">
+                <span aria-hidden="true">🎅</span>
+                <span>Secret Santa</span>
+              </div>
+              <div class="icone-event" role="listitem">
+                <span aria-hidden="true">🔥</span>
+                <span>Barbecue</span>
+              </div>
+              <div class="icone-event" role="listitem">
+                <span aria-hidden="true">🎉</span>
+                <span>Surprise</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Photo de Jean & Sandrine (les organisateurs) -->
+          <div class="esprit__photo apparition" style="animation-delay: 0.2s">
+            <div class="polaroid polaroid--incline-droite">
+              <img
+                src="img/jean.png"
+                alt="Jean et Sandrine, les organisateurs du Comité des Fêtes, faisant une grimace"
+                width="400"
+                height="400"
+                loading="lazy"
+              />
+              <p class="polaroid__legende">Jean </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECTION 2 BIS — LES RÈGLES OFFICIELLES
+         Petit clin d'œil humoristique : le « règlement » du comité.
+         La formule mathématique de la règle 3 est écrite en MathML natif
+         (pas de bibliothèque externe), ce qui respecte la CSP stricte
+         (script-src 'self') et reste accessible aux lecteurs d'écran.
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="regles" id="regles" aria-labelledby="titre-regles">
+      <div class="conteneur">
+        <div class="regles__carte apparition">
+          <h2 class="titre-section titre-section--clair regles__titre" id="titre-regles">
+            📋 La règle d'Or
+          </h2>
+          <ol class="regles__liste">
+            <li class="regle">
+              <span class="regle__numero" aria-hidden="true">3.</span>
+              <p class="regle__texte">
+                Le budget ne doit pas dépasser :
+                <!--
+                  Formule en MathML : intégrale + somme.
+                  MathML est rendu nativement par le navigateur (aucun JS),
+                  et reste lisible par les technologies d'assistance.
+                -->
+                <math xmlns="http://www.w3.org/1998/Math/MathML" class="regle__formule" aria-label="l'intégrale de 0 à plus l'infini de e puissance moins x carré sur 1 plus sinus carré de x, dx, plus la somme pour n allant de 1 à l'infini de moins un puissance n fois logarithme népérien de n plus 1, sur n carré plus racine de n">
+                  <mrow>
+                    <msubsup>
+                      <mo>∫</mo>
+                      <mn>0</mn>
+                      <mrow><mo>+</mo><mi>∞</mi></mrow>
+                    </msubsup>
+                    <mfrac>
+                      <msup><mi>e</mi><mrow><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></msup>
+                      <mrow><mn>1</mn><mo>+</mo><msup><mi>sin</mi><mn>2</mn></msup><mo>(</mo><mi>x</mi><mo>)</mo></mrow>
+                    </mfrac>
+                    <mi>d</mi><mi>x</mi>
+                    <mo>+</mo>
+                    <munderover>
+                      <mo>∑</mo>
+                      <mrow><mi>n</mi><mo>=</mo><mn>1</mn></mrow>
+                      <mi>∞</mi>
+                    </munderover>
+                    <mfrac>
+                      <mrow>
+                        <msup><mrow><mo>(</mo><mo>−</mo><mn>1</mn><mo>)</mo></mrow><mi>n</mi></msup>
+                        <mi>ln</mi><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo>)</mo>
+                      </mrow>
+                      <mrow>
+                        <msup><mi>n</mi><mn>2</mn></msup>
+                        <mo>+</mo>
+                        <msqrt><mi>n</mi></msqrt>
+                      </mrow>
+                    </mfrac>
+                  </mrow>
+                </math>
+              </p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECTION 3 — GALERIE
+         Grille de photos avec légendes humoristiques.
+         Filtre JS par catégorie d'événement.
+         Les images utilisent loading="lazy" pour les performances.
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="galerie" id="galerie" aria-labelledby="titre-galerie">
+      <div class="conteneur">
+        <div class="galerie__entete apparition">
+          <h2 class="titre-section titre-section--clair" id="titre-galerie">
+            📸 Les preuves
+          </h2>
+          <p class="galerie__sous-titre">
+            Ce soir-là, personne n'a corrigé de copies.
+          </p>
+        </div>
+
+        <!-- Boutons de filtre par catégorie -->
+        <div class="galerie__filtres" role="group" aria-label="Filtrer les photos par événement">
+          <button class="filtre actif" data-filtre="tous" aria-pressed="true">Tous</button>
+          <button class="filtre" data-filtre="afterwork" aria-pressed="false">🍺 Afterwork</button>
+          <button class="filtre" data-filtre="secret-santa" aria-pressed="false">🎅 Secret Santa</button>
+          <button class="filtre" data-filtre="photobooth" aria-pressed="false">📸 Photobooth</button>
+        </div>
+
+        <!-- Grille photos — chaque item est un polaroïd cliquable -->
+        <div class="galerie__grille" id="grille-galerie" role="list" aria-label="Galerie photos des événements">
+
+          <!-- === AFTERWORK L'ÉQUINOXE === -->
+          <article class="galerie__item polaroid polaroid--incline-gauche" data-categorie="afterwork" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : groupe en train de danser à L'Équinoxe">
+              <img
+                src="img/bars/equinoxe_2.png"
+                alt="Collègues bras levés en train de danser dans une salle aux lumières colorées"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">Personne ne sait comment on en est arrivés là. Personne ne regrette.</p>
+          </article>
+
+          <article class="galerie__item polaroid polaroid--incline-droite" data-categorie="afterwork" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : afterwork au Grand Huit, longue tablée">
+              <img
+                src="img/bars/le_grand_huit.png"
+                alt="Longue tablée de collègues en extérieur sous une halle, verres à la main"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">Le Grand Huit — une table, vingt légendes, zéro sérieux en vue 🎉</p>
+          </article>
+
+          <article class="galerie__item polaroid" data-categorie="afterwork" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : Jean et Sandrine souriant à l'AVEC">
+              <img
+                src="img/bars/avec.png"
+                alt="Jean et Sandrine souriant, assis dans un bar avec néon en forme de cœur en arrière-plan"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">AVEC — les deux fondateurs dans leur habitat naturel 🍸</p>
+          </article>
+
+          <article class="galerie__item polaroid polaroid--incline-gauche" data-categorie="afterwork" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : grand afterwork au Grand Huit">
+              <img
+                src="img/events/grand_huit_afterwork.jpg"
+                alt="Homme portant une veste translucide Tsingtao remplie de bière, une paille dans la bouche — souvenir d'afterwork"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">Niveau d'engagement : 100%. On ne commente pas. 🍺</p>
+          </article>
+
+          <article class="galerie__item polaroid polaroid--incline-droite" data-categorie="afterwork" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : équipe au Grand Huit restaurant">
+              <img
+                src="img/bars/equinoxe_3.jpg"
+                alt="Grande tablée de collègues qui font signe de la main, plats et verres sur la table"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">Jamais une soirée dans une cave n'a été aussi sympa !</p>
+          </article>
+
+          <!-- === SECRET SANTA === -->
+          <article class="galerie__item polaroid" data-categorie="secret-santa" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : Secret Santa, collègue avec pull de Noël">
+              <img
+                src="img/events/secret_santa_2.png"
+                alt="Une collègue portant un pull de Noël rouge Ho-Ho-Ho lors du Secret Santa"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">Secret Santa — Amour, Gloire et Beauté</p>
+          </article>
+
+          <article class="galerie__item polaroid polaroid--incline-droite" data-categorie="secret-santa" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : trois collègues fières avec leurs cadeaux Secret Santa">
+              <img
+                src="img/events/secret_santa_3.png"
+                alt="Trois collègues souriantes tenant leurs cadeaux du Secret Santa — boule à neige, bougies"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">L'année où quelqu'un a reçu une boule à neige. On s'en souvient encore. ❄️</p>
+          </article>
+
+          <article class="galerie__item polaroid polaroid--incline-gauche" data-categorie="secret-santa" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : ambiance générale Secret Santa">
+              <img
+                src="img/events/secret_santa_1.png"
+                alt="Vue générale du Secret Santa, collègues échangeant des cadeaux dans une salle"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">Secret Santa 2025 — ambiance et débordements contrôlés. Presque.</p>
+          </article>
+
+          <!-- === PHOTOBOOTH === -->
+          <article class="galerie__item polaroid" data-categorie="photobooth" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : photobooth La Librairie, quatre cases de grimaces">
+              <img
+                src="img/events/photobooth.png"
+                alt="Quatre collègues dans un photobooth, grimaces et fou-rires — La Librairie"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">« Tu veux ma photo ? » Oui. Absolument oui. 📷</p>
+          </article>
+
+          <article class="galerie__item polaroid polaroid--incline-droite" data-categorie="photobooth" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : duo de professeurs à La Librairie">
+              <img
+                src="img/bars/la_librairie.png"
+                alt="Deux collègues souriants dans le bar La Librairie, étagères de livres en arrière-plan"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">La Librairie — des livres, des bières, des collègues. Le triangle parfait. 📚</p>
+          </article>
+
+          <article class="galerie__item polaroid polaroid--incline-gauche" data-categorie="photobooth" role="listitem">
+            <button class="polaroid__bouton" aria-label="Agrandir : deuxième photo La Librairie">
+              <img
+                src="img/bars/la_librairie_2.png"
+                alt="Vue intérieure de La Librairie avec des collègues"
+                width="400"
+                height="300"
+                loading="lazy"
+              />
+            </button>
+            <p class="polaroid__legende">3 tournées, 0 regret, quelques idées de cours inexplicablement brillantes. ✨</p>
+          </article>
+
+        </div>
+
+        <!-- Lightbox modale pour agrandir les photos -->
+        <!-- SÉCURITÉ : Le contenu de la lightbox est injecté via createElement,
+             jamais via innerHTML avec du texte utilisateur. -->
+        <div
+          class="lightbox"
+          id="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Photo agrandie"
+          hidden
+        >
+          <button class="lightbox__fermer" id="lightbox-fermer" aria-label="Fermer la photo">✕</button>
+          <button class="lightbox__precedent" id="lightbox-precedent" aria-label="Photo précédente">‹</button>
+          <div class="lightbox__media" id="lightbox-media"></div>
+          <p class="lightbox__legende" id="lightbox-legende"></p>
+          <button class="lightbox__suivant" id="lightbox-suivant" aria-label="Photo suivante">›</button>
+        </div>
+        <div class="lightbox__fond" id="lightbox-fond" hidden aria-hidden="true"></div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECTION 4 — BARS TESTÉS
+         Cartes pour chaque bar avec lien Google Maps.
+         Les adresses Google Maps sont des liens externes sécurisés.
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="bars" id="bars" aria-labelledby="titre-bars">
+      <div class="conteneur">
+        <div class="bars__entete apparition">
+          <h2 class="titre-section" id="titre-bars">
+            🍺 Notre labo
+          </h2>
+          <p class="bars__sous-titre">
+            Cinq adresses testées, approuvées, et retestées par sécurité.
+          </p>
+        </div>
+
+        <div class="bars__grille">
+
+          <!-- Carte bar : AVEC -->
+          <article class="carte-bar apparition" aria-label="Bar AVEC">
+            <div class="carte-bar__image">
+              <img
+                src="img/bars/avec.png"
+                alt="Intérieur de l'AVEC, bar spacieux avec déco lumineuse"
+                width="400"
+                height="250"
+                loading="lazy"
+              />
+            </div>
+            <div class="carte-bar__contenu">
+              <div class="carte-bar__entete">
+                <h3 class="carte-bar__nom">AVEC</h3>
+                <span class="carte-bar__emoji" aria-label="Ambiance : festif et vivant">🎉</span>
+              </div>
+              <p class="carte-bar__description">
+                Vaste, vivant, et on y entend quand même ses collègues. Rare.
+              </p>
+              <p class="carte-bar__adresse">📍 Rennes, quartier centre</p>
+              <a
+                href="https://maps.google.com/?q=AVEC+Rennes"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bouton bouton--carte"
+                aria-label="Voir AVEC sur Google Maps (ouvre un nouvel onglet)"
+              >
+                📍 Voir sur Google Maps
+              </a>
+            </div>
+          </article>
+
+          <!-- Carte bar : Café La Librairie -->
+          <article class="carte-bar apparition" style="animation-delay: 0.1s" aria-label="Bar Café La Librairie">
+            <div class="carte-bar__image">
+              <img
+                src="img/bars/la_librairie.png"
+                alt="Ambiance chaleureuse au Café La Librairie, livres en décor"
+                width="400"
+                height="250"
+                loading="lazy"
+              />
+            </div>
+            <div class="carte-bar__contenu">
+              <div class="carte-bar__entete">
+                <h3 class="carte-bar__nom">Café La Librairie</h3>
+                <span class="carte-bar__emoji" aria-label="Ambiance : livres et bière">📚</span>
+              </div>
+              <p class="carte-bar__description">
+                Des livres, des bières, des profs. Le triangle parfait.
+              </p>
+              <p class="carte-bar__adresse">📍 Rennes, centre-ville</p>
+              <a
+                href="https://maps.google.com/?q=Caf%C3%A9+La+Librairie+Rennes"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bouton bouton--carte"
+                aria-label="Voir Café La Librairie sur Google Maps (ouvre un nouvel onglet)"
+              >
+                📍 Voir sur Google Maps
+              </a>
+            </div>
+          </article>
+
+          <!-- Carte bar : L'Équinoxe -->
+          <article class="carte-bar apparition" style="animation-delay: 0.2s" aria-label="Bar L'Équinoxe">
+            <div class="carte-bar__image">
+              <img
+                src="img/bars/equinoxe.png"
+                alt="Ambiance festive à L'Équinoxe, lumières néon colorées et dancefloor"
+                width="400"
+                height="250"
+                loading="lazy"
+              />
+            </div>
+            <div class="carte-bar__contenu">
+              <div class="carte-bar__entete">
+                <h3 class="carte-bar__nom">L'Équinoxe</h3>
+                <span class="carte-bar__emoji" aria-label="Ambiance : fête et danse">🕺</span>
+              </div>
+              <p class="carte-bar__description">
+                Testé lors d'un équinoxe ? Non. Mais c'était bien quand même.
+              </p>
+              <p class="carte-bar__adresse">📍 Rennes</p>
+              <a
+                href="https://maps.google.com/?q=L%27%C3%89quinoxe+Rennes"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bouton bouton--carte"
+                aria-label="Voir L'Équinoxe sur Google Maps (ouvre un nouvel onglet)"
+              >
+                📍 Voir sur Google Maps
+              </a>
+            </div>
+          </article>
+
+          <!-- Carte bar : Le Grand Huit -->
+          <article class="carte-bar apparition" style="animation-delay: 0.3s" aria-label="Bar Le Grand Huit">
+            <div class="carte-bar__image">
+              <img
+                src="img/bars/le_grand_huit.png"
+                alt="Grande tablée conviviale sous la halle du Grand Huit, verres et bonne humeur"
+                width="400"
+                height="250"
+                loading="lazy"
+              />
+            </div>
+            <div class="carte-bar__contenu">
+              <div class="carte-bar__entete">
+                <h3 class="carte-bar__nom">Le Grand Huit</h3>
+                <span class="carte-bar__emoji" aria-label="Ambiance : convivial et festif">🎡</span>
+              </div>
+              <p class="carte-bar__description">
+                Une grande halle, de longues tables, et l'impression d'être en vacances. À Rennes.
+              </p>
+              <p class="carte-bar__adresse">📍 Rennes</p>
+              <a
+                href="https://maps.google.com/?q=Le+Grand+Huit+Rennes"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bouton bouton--carte"
+                aria-label="Voir Le Grand Huit sur Google Maps (ouvre un nouvel onglet)"
+              >
+                📍 Voir sur Google Maps
+              </a>
+            </div>
+          </article>
+
+          <!-- Carte bar : Café Saint-Jacques -->
+          <article class="carte-bar apparition" style="animation-delay: 0.4s" aria-label="Bar Café Saint-Jacques">
+            <div class="carte-bar__image carte-bar__image--placeholder">
+              <div class="carte-bar__emoji-grand" aria-hidden="true">☕</div>
+              <!-- NOTE : Pas encore de photo du Café Saint-Jacques.
+                   À remplacer par : img/bars/saint_jacques.png -->
+            </div>
+            <div class="carte-bar__contenu">
+              <div class="carte-bar__entete">
+                <h3 class="carte-bar__nom">Café Saint-Jacques</h3>
+                <span class="carte-bar__emoji" aria-label="Ambiance : chaleureux">☕</span>
+              </div>
+              <p class="carte-bar__description">
+                Vue sur la place, ambiance chaleureuse. Parfait pour se plaindre de l'EDT en bonne compagnie.
+              </p>
+              <p class="carte-bar__adresse">📍 Place Saint-Jacques, Rennes</p>
+              <a
+                href="https://maps.google.com/?q=Caf%C3%A9+Saint-Jacques+Rennes"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="bouton bouton--carte"
+                aria-label="Voir Café Saint-Jacques sur Google Maps (ouvre un nouvel onglet)"
+              >
+                📍 Voir sur Google Maps
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SECTION 5 — BOÎTE À IDÉES
+         Formulaire unique (MVP) envoyé via Formspree.
+         SÉCURITÉ :
+         - Validation HTML5 native (required, maxlength, pattern)
+         - Validation JS côté client en complément (jamais suffisante seule)
+         - Pas d'innerHTML avec des données utilisateur
+         - Action vers Formspree (HTTPS uniquement)
+         - Remplacer VOTRE_ID_FORMSPREE par l'ID réel du compte Formspree
+    ═══════════════════════════════════════════════════════════════ -->
+    <section class="idees" id="idees" aria-labelledby="titre-idees">
+      <div class="conteneur">
+        <div class="idees__entete apparition">
+          <h2 class="titre-section titre-section--clair" id="titre-idees">
+            💡 T'as une idée ?
+          </h2>
+          <p class="idees__sous-titre">
+            On lit tout. On retient presque tout. On fait de notre mieux.
+          </p>
+        </div>
+
+        <div class="idees__grille">
+
+          <form
+            class="formulaire apparition"
+            id="formulaire-idees"
+            action="https://formspree.io/f/VOTRE_ID_FORMSPREE"
+            method="POST"
+            novalidate
+            aria-label="Formulaire boîte à idées"
+          >
+            <!-- Champ caché pour identifier la source -->
+            <input type="hidden" name="_subject" value="Nouvelle idée — La Sonnette 🔔" />
+
+            <!-- Anti-spam honeypot : champ invisible, ne doit jamais être rempli par un humain -->
+            <!-- SÉCURITÉ : Ce champ piège les bots de formulaire basiques -->
+            <div class="champ-cache" aria-hidden="true">
+              <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" />
+            </div>
+
+            <fieldset class="formulaire__groupe">
+              <legend class="formulaire__legende">Quel type d'idée ?</legend>
+              <div class="formulaire__radio-groupe" role="radiogroup">
+                <label class="formulaire__radio">
+                  <input type="radio" name="type_idee" value="lieu" checked />
+                  <span>🍺 Un lieu à tester</span>
+                </label>
+                <label class="formulaire__radio">
+                  <input type="radio" name="type_idee" value="evenement" />
+                  <span>🎉 Un événement à organiser</span>
+                </label>
+              </div>
+            </fieldset>
+
+            <div class="formulaire__champ">
+              <label class="formulaire__label" for="champ-nom-lieu">
+                Nom du lieu ou de l'idée <span aria-hidden="true">*</span>
+              </label>
+              <input
+                type="text"
+                id="champ-nom-lieu"
+                name="nom"
+                class="formulaire__input"
+                placeholder="ex. « Le bar d'en face du lycée que je fixe tous les vendredis »"
+                required
+                maxlength="100"
+                aria-required="true"
+                aria-describedby="aide-nom"
+              />
+              <span class="formulaire__aide" id="aide-nom">100 caractères max.</span>
+              <span class="formulaire__erreur" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="formulaire__champ">
+              <label class="formulaire__label" for="champ-description">
+                Dis-nous tout <span aria-hidden="true">*</span>
+              </label>
+              <textarea
+                id="champ-description"
+                name="description"
+                class="formulaire__textarea"
+                placeholder="ex. « Pétanque + rosé », « Escape game », « Soirée jeux de société »…"
+                required
+                maxlength="500"
+                rows="4"
+                aria-required="true"
+                aria-describedby="aide-description"
+              ></textarea>
+              <span class="formulaire__aide" id="aide-description">500 caractères max.</span>
+              <span class="formulaire__erreur" role="alert" aria-live="polite"></span>
+            </div>
+
+            <div class="formulaire__champ">
+              <label class="formulaire__label" for="champ-pseudo">
+                Ton pseudo (facultatif)
+              </label>
+              <input
+                type="text"
+                id="champ-pseudo"
+                name="pseudo"
+                class="formulaire__input"
+                placeholder="Anonyme de la salle 204…"
+                maxlength="50"
+                aria-describedby="aide-pseudo"
+              />
+              <span class="formulaire__aide" id="aide-pseudo">Laisse vide pour rester anonyme.</span>
+            </div>
+
+            <button type="submit" class="bouton bouton--primaire bouton--large" id="bouton-envoi">
+              Envoyer l'idée 🚀
+            </button>
+
+            <!-- Message de confirmation affiché après envoi réussi -->
+            <div
+              class="formulaire__confirmation"
+              id="confirmation-envoi"
+              hidden
+              role="status"
+              aria-live="polite"
+            >
+              ✅ C'est noté ! Jean et Sandrine liront ça entre deux copies.
+            </div>
+
+            <!-- Message d'erreur réseau -->
+            <div
+              class="formulaire__erreur-globale"
+              id="erreur-envoi"
+              hidden
+              role="alert"
+              aria-live="assertive"
+            >
+              ❌ Oops, quelque chose a planté. Réessaie ou envoie un mail directement.
+            </div>
+
+          </form>
+
+          <!-- Bloc contact direct -->
+          <div class="idees__contact apparition" style="animation-delay: 0.2s">
+            <div class="contact-direct">
+              <p class="contact-direct__titre">Ou alors… en vrai 💬</p>
+              <p>Sandrine et Jean sont dans les couloirs tous les jours.</p>
+              <div class="contact-direct__decoration" aria-hidden="true">
+                <span>🎉</span><span>🍺</span><span>🔔</span><span>❤️</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       FOOTER
+       Copyright, crédits et contact.
+  ═══════════════════════════════════════════════════════════════ -->
+  <footer class="pied-de-page" role="contentinfo">
+    <div class="conteneur">
+      <div class="pied-de-page__contenu">
+        <p class="pied-de-page__logo">🔔 La Sonnette</p>
+        <p class="pied-de-page__copyright">
+          © La Sonnette — Comité des Fêtes du Pôle Sup de la Salle, Rennes
+        </p>
+        <p class="pied-de-page__badges">
+          <span>🎓 fait par des profs</span>
+          <span>❤️ pour des profs</span>
+          <span>☕ avec beaucoup de café</span>
+        </p>
+        <a
+          href="mailto:comite-fetes@polesup-delasalle.fr"
+          class="pied-de-page__contact"
+          aria-label="Envoyer un email au Comité des Fêtes"
+        >
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts JS séparés par responsabilité, chargés en fin de body -->
+  <script src="js/main.js"></script>
+  <script src="js/galerie.js"></script>
+  <script src="js/formulaire.js"></script>
+
+</body>
+</html>

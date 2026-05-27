@@ -1,0 +1,1172 @@
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ * style.css — La Sonnette · Comité des Fêtes
+ * ═══════════════════════════════════════════════════════════════════
+ *
+ * Organisation :
+ *  1. Variables CSS (palette, typographie, espacements)
+ *  2. Reset & base
+ *  3. Utilitaires (conteneur, boutons, titres, animations)
+ *  4. Navigation
+ *  5. Hero
+ *  6. Esprit du comité
+ *  7. Polaroïds (partagé galerie + esprit)
+ *  8. Bars testés
+ *  9. Boîte à idées
+ * 10. Footer
+ * 11. Responsive
+ *
+ * Conventions :
+ *  - BEM simplifié : .bloc__element--modificateur
+ *  - Noms de classes en français quand pertinent
+ *  - Variables CSS pour tout ce qui se répète
+ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   1. VARIABLES CSS — Palette, typo, transitions
+   ───────────────────────────────────────────────────────────────── */
+:root {
+  /* Palette chaude issue du brief */
+  --couleur-fond:          #FDF6EC;   /* Crème/beige chaud */
+  --couleur-fond-carte:    #FFFDF7;   /* Blanc cassé */
+  --couleur-accent-jaune:  #F5C842;   /* Jaune festif */
+  --couleur-accent-brique: #D95F3B;   /* Terracotta */
+  --couleur-texte:         #3B2A1A;   /* Brun foncé */
+  --couleur-texte-clair:   #7A5C3A;   /* Brun moyen */
+  --couleur-fond-sombre:   #2C1A0E;   /* Fond sections foncées */
+  --couleur-blanc:         #ffffff;
+
+  /* Typographie */
+  --police-titre: 'Playfair Display', Georgia, serif;
+  --police-corps:  'Nunito', 'Segoe UI', sans-serif;
+
+  /* Espacements */
+  --espace-xs:   0.5rem;
+  --espace-sm:   1rem;
+  --espace-md:   2rem;
+  --espace-lg:   4rem;
+  --espace-xl:   6rem;
+
+  /* Arrondis */
+  --arrondi-sm:  6px;
+  --arrondi-md:  12px;
+  --arrondi-lg:  24px;
+
+  /* Ombres */
+  --ombre-carte: 0 4px 24px rgba(59, 42, 26, 0.12);
+  --ombre-forte: 0 8px 40px rgba(59, 42, 26, 0.22);
+
+  /* Transitions douces */
+  --transition-rapide: 0.18s ease;
+  --transition-normale: 0.3s ease;
+
+  /* Largeur max du contenu */
+  --largeur-max: 1180px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   2. RESET & BASE
+   Reset minimal : on conserve les comportements navigateur utiles.
+   ───────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Défilement fluide entre les ancres */
+  scroll-behavior: smooth;
+  /* Taille de base pour les calculs rem */
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--police-corps);
+  background-color: var(--couleur-fond);
+  color: var(--couleur-texte);
+  line-height: 1.65;
+  /* Évite le décalage quand la scrollbar apparaît */
+  overflow-x: hidden;
+}
+
+/* Images fluides par défaut */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Listes non stylées par défaut dans les composants */
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+/* Liens */
+a {
+  color: var(--couleur-accent-brique);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--couleur-texte);
+}
+
+/* Focus visible : accessibilité clavier — ne jamais supprimer sans alternative */
+:focus-visible {
+  outline: 3px solid var(--couleur-accent-jaune);
+  outline-offset: 3px;
+  border-radius: var(--arrondi-sm);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   3. UTILITAIRES
+   ───────────────────────────────────────────────────────────────── */
+
+/* Conteneur centré avec marges latérales */
+.conteneur {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 0 var(--espace-md);
+}
+
+/* Titres de section */
+.titre-section {
+  font-family: var(--police-titre);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: var(--couleur-texte);
+  margin-bottom: var(--espace-md);
+}
+
+/* Titres de section sur fond sombre */
+.titre-section--clair {
+  color: var(--couleur-fond);
+}
+
+.titre-section em {
+  font-style: italic;
+  color: var(--couleur-accent-brique);
+}
+
+.titre-section--clair em {
+  color: var(--couleur-accent-jaune);
+}
+
+/* ── Boutons ── */
+
+/* Base commune à tous les boutons */
+.bouton {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espace-xs);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--arrondi-lg);
+  font-family: var(--police-corps);
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition:
+    background-color var(--transition-rapide),
+    transform var(--transition-rapide),
+    box-shadow var(--transition-rapide);
+  /* Animation douce au survol — léger rebond */
+}
+
+.bouton:hover,
+.bouton:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--ombre-carte);
+}
+
+/* Bouton principal : jaune festif */
+.bouton--primaire {
+  background-color: var(--couleur-accent-jaune);
+  color: var(--couleur-texte);
+  border-color: var(--couleur-accent-jaune);
+}
+
+.bouton--primaire:hover,
+.bouton--primaire:focus-visible {
+  background-color: #e6b82e;
+  border-color: #e6b82e;
+  color: var(--couleur-texte);
+}
+
+/* Bouton secondaire : contour brique */
+.bouton--secondaire {
+  background-color: transparent;
+  color: var(--couleur-accent-brique);
+  border-color: var(--couleur-accent-brique);
+}
+
+.bouton--secondaire:hover,
+.bouton--secondaire:focus-visible {
+  background-color: var(--couleur-accent-brique);
+  color: var(--couleur-blanc);
+}
+
+/* Bouton carte bar : plus petit, sobre */
+.bouton--carte {
+  background-color: transparent;
+  color: var(--couleur-accent-brique);
+  border-color: var(--couleur-accent-brique);
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
+
+.bouton--carte:hover,
+.bouton--carte:focus-visible {
+  background-color: var(--couleur-accent-brique);
+  color: var(--couleur-blanc);
+}
+
+/* Bouton large (formulaire) */
+.bouton--large {
+  width: 100%;
+  justify-content: center;
+  font-size: 1.1rem;
+  padding: 1rem 2rem;
+}
+
+/* Animation pulsation sur le CTA principal — attire l'œil */
+@keyframes pulsation {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 200, 66, 0.5); }
+  50%       { box-shadow: 0 0 0 10px rgba(245, 200, 66, 0); }
+}
+
+.bouton--primaire {
+  animation: pulsation 2.5s ease-in-out infinite;
+}
+
+.bouton--primaire:hover {
+  animation: none;
+}
+
+/* ── Animations au scroll ── */
+/*
+ * Les éléments avec .apparition sont invisibles par défaut.
+ * La classe .visible est ajoutée par JS via IntersectionObserver (main.js).
+ * Cela évite le flash de contenu et crée un effet d'entrée fluide.
+ */
+.apparition {
+  opacity: 0;
+  transform: translateY(30px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+
+.apparition.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Accessibilité : respecter la préférence de l'utilisateur pour les animations */
+@media (prefers-reduced-motion: reduce) {
+  .apparition {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .bouton--primaire {
+    animation: none;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   4. NAVIGATION
+   Barre fixe en haut, fond semi-transparent avec flou.
+   Le menu burger s'affiche sur mobile.
+   ───────────────────────────────────────────────────────────────── */
+.entete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: rgba(253, 246, 236, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--couleur-accent-jaune);
+  transition: box-shadow var(--transition-normale);
+}
+
+/* Ombre quand on a scrollé (ajoutée par JS) */
+.entete--avec-ombre {
+  box-shadow: var(--ombre-carte);
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+  padding: 0.75rem var(--espace-md);
+  gap: var(--espace-md);
+}
+
+/* Logo / nom du site dans la nav */
+.navigation__logo {
+  font-family: var(--police-titre);
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--couleur-texte);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.navigation__logo:hover {
+  color: var(--couleur-accent-brique);
+}
+
+/* Liste des liens de navigation */
+.navigation__liens {
+  display: flex;
+  align-items: center;
+  gap: var(--espace-sm);
+  list-style: none;
+}
+
+.navigation__lien {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--couleur-texte-clair);
+  text-decoration: none;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--arrondi-sm);
+  transition: background-color var(--transition-rapide), color var(--transition-rapide);
+}
+
+.navigation__lien:hover,
+.navigation__lien:focus-visible,
+.navigation__lien.actif {
+  background-color: var(--couleur-accent-jaune);
+  color: var(--couleur-texte);
+}
+
+/* Bouton burger — visible seulement sur mobile */
+.navigation__burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: var(--arrondi-sm);
+}
+
+.navigation__burger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: var(--couleur-texte);
+  border-radius: 2px;
+  transition: transform var(--transition-normale), opacity var(--transition-normale);
+}
+
+/* État ouvert du burger */
+.navigation__burger[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.navigation__burger[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.navigation__burger[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   5. HERO
+   Section plein écran avec fond photo floutée.
+   ───────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100svh; /* svh = small viewport height, meilleur sur mobile */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(80px + var(--espace-lg)) var(--espace-md) var(--espace-xl);
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Fond photo floutée — chargé en CSS pour éviter le blocage LCP */
+.hero__fond {
+  position: absolute;
+  inset: 0;
+  background-image: url('../img/bars/le_grand_huit.png');
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px) brightness(0.3) saturate(0.8);
+  transform: scale(1.05); /* Compense le débordement du flou */
+  z-index: 0;
+}
+
+/* Contenu du hero au-dessus du fond */
+.hero__contenu {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero__surtitre {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--couleur-accent-jaune);
+  margin-bottom: var(--espace-sm);
+  opacity: 0;
+  animation: entree-bas 0.7s ease 0.2s forwards;
+}
+
+.hero__titre {
+  font-family: var(--police-titre);
+  font-size: clamp(3rem, 10vw, 7rem);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--couleur-blanc);
+  margin-bottom: var(--espace-md);
+  opacity: 0;
+  animation: entree-bas 0.7s ease 0.4s forwards;
+}
+
+.hero__titre em {
+  color: var(--couleur-accent-jaune);
+  font-style: italic;
+  display: block;
+}
+
+.hero__accroche {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: var(--espace-md);
+  opacity: 0;
+  animation: entree-bas 0.7s ease 0.6s forwards;
+}
+
+.hero__cta {
+  display: flex;
+  gap: var(--espace-sm);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: var(--espace-lg);
+  opacity: 0;
+  animation: entree-bas 0.7s ease 0.8s forwards;
+}
+
+/* Flèche de scroll décorative */
+.hero__scroll {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.5rem;
+  animation: rebond 1.5s ease-in-out infinite;
+}
+
+/* Animations keyframes du hero */
+@keyframes entree-bas {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes rebond {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(8px); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   6. ESPRIT DU COMITÉ
+   Section avec texte et photo polaroïd.
+   ───────────────────────────────────────────────────────────────── */
+.esprit {
+  padding: var(--espace-xl) 0;
+  background-color: var(--couleur-fond);
+  /* Séparateur ondulé en haut via clip-path */
+}
+
+.esprit__grille {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--espace-xl);
+  align-items: center;
+}
+
+.esprit__citation {
+  border-left: 4px solid var(--couleur-accent-jaune);
+  padding-left: var(--espace-md);
+  margin: var(--espace-md) 0;
+  font-size: 1.1rem;
+  color: var(--couleur-texte);
+  font-style: italic;
+}
+
+.esprit__citation footer {
+  margin-top: 0.75rem;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--couleur-accent-brique);
+  font-size: 0.95rem;
+}
+
+/* Icônes des types d'événements */
+.esprit__icones {
+  display: flex;
+  gap: var(--espace-sm);
+  flex-wrap: wrap;
+  margin-top: var(--espace-md);
+}
+
+.icone-event {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  background-color: var(--couleur-fond-carte);
+  border: 2px solid var(--couleur-accent-jaune);
+  border-radius: var(--arrondi-md);
+  padding: 0.75rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--couleur-texte-clair);
+  transition: transform var(--transition-rapide), background-color var(--transition-rapide);
+}
+
+.icone-event:hover {
+  transform: translateY(-4px);
+  background-color: var(--couleur-accent-jaune);
+}
+
+.icone-event span:first-child {
+  font-size: 1.8rem;
+}
+
+/* Zone d'affichage du polaroïd dans la section esprit */
+.esprit__photo {
+  display: flex;
+  justify-content: center;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   6 BIS. LES RÈGLES OFFICIELLES
+   Encart sombre type « règlement » avec numéros en accent.
+   ───────────────────────────────────────────────────────────────── */
+.regles {
+  padding: var(--espace-lg) 0;
+  background-color: var(--couleur-fond);
+}
+
+/* Carte sombre contenant les règles (rappel de l'ambiance "tableau noir") */
+.regles__carte {
+  background-color: var(--couleur-fond-sombre);
+  border-radius: var(--arrondi-lg);
+  padding: var(--espace-lg);
+  border: 2px solid var(--couleur-accent-jaune);
+  box-shadow: var(--ombre-carte);
+}
+
+.regles__titre {
+  margin-bottom: var(--espace-md);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+}
+
+.regles__liste {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
+/* Une règle = numéro + texte alignés */
+.regle {
+  display: flex;
+  gap: var(--espace-sm);
+  align-items: baseline;
+}
+
+.regle__numero {
+  font-family: var(--police-titre);
+  font-size: 1.3rem;
+  font-weight: 900;
+  color: var(--couleur-accent-brique);
+  flex-shrink: 0;
+}
+
+.regle__texte {
+  color: var(--couleur-fond);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Aparté humoristique entre parenthèses, plus discret */
+.regle__texte em {
+  color: rgba(253, 246, 236, 0.6);
+  font-style: italic;
+}
+
+/* Formule mathématique : isolée sur sa ligne, taille augmentée
+   pour rester lisible. overflow-x permet le défilement sur mobile. */
+.regle__formule {
+  display: block;
+  margin-top: 0.6rem;
+  font-size: 1.3rem;
+  color: var(--couleur-accent-jaune);
+  overflow-x: auto;
+  max-width: 100%;
+  padding-bottom: 0.25rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   7. POLAROÏDS
+   Effet polaroïd CSS : bordure blanche épaisse, légère rotation.
+   Partagé entre la galerie et la section esprit.
+   ───────────────────────────────────────────────────────────────── */
+.polaroid {
+  background: var(--couleur-blanc);
+  padding: 12px 12px 40px;
+  box-shadow: var(--ombre-forte);
+  transition: transform var(--transition-normale), box-shadow var(--transition-normale);
+  /* Rotation neutre par défaut */
+  transform: rotate(0deg);
+}
+
+/* Variantes de rotation */
+.polaroid--incline-gauche {
+  transform: rotate(-2.5deg);
+}
+
+.polaroid--incline-droite {
+  transform: rotate(2deg);
+}
+
+/* Survol : redresse le polaroïd + élève */
+.polaroid:hover {
+  transform: rotate(0deg) translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 50px rgba(59, 42, 26, 0.3);
+  z-index: 2;
+}
+
+.polaroid img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.polaroid__legende {
+  margin-top: 0.5rem;
+  font-family: var(--police-titre);
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+  text-align: center;
+  line-height: 1.3;
+  /* Simule l'écriture manuscrite du polaroïd */
+}
+
+/* Bouton invisible qui rend le polaroïd cliquable (accessibilité) */
+.polaroid__bouton {
+  background: none;
+  border: none;
+  cursor: zoom-in;
+  padding: 0;
+  display: block;
+  width: 100%;
+}
+
+.polaroid__bouton:focus-visible {
+  outline: 3px solid var(--couleur-accent-jaune);
+  outline-offset: 4px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   8. BARS TESTÉS
+   Grille de cartes, une par bar.
+   ───────────────────────────────────────────────────────────────── */
+.bars {
+  padding: var(--espace-xl) 0;
+  background-color: var(--couleur-fond-carte);
+  /* Bordure décorative en haut */
+  border-top: 4px solid var(--couleur-accent-jaune);
+}
+
+.bars__entete {
+  text-align: center;
+  margin-bottom: var(--espace-lg);
+}
+
+.bars__sous-titre {
+  font-size: 1.1rem;
+  color: var(--couleur-texte-clair);
+  margin-top: -var(--espace-sm);
+}
+
+/* Grille des cartes bars */
+.bars__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--espace-md);
+}
+
+/* Carte individuelle d'un bar */
+.carte-bar {
+  background-color: var(--couleur-fond-carte);
+  border-radius: var(--arrondi-md);
+  overflow: hidden;
+  box-shadow: var(--ombre-carte);
+  border: 1px solid rgba(245, 200, 66, 0.3);
+  transition:
+    transform var(--transition-normale),
+    box-shadow var(--transition-normale);
+}
+
+.carte-bar:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--ombre-forte);
+}
+
+/* Zone image de la carte */
+.carte-bar__image {
+  height: 200px;
+  overflow: hidden;
+}
+
+.carte-bar__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--transition-normale);
+}
+
+.carte-bar:hover .carte-bar__image img {
+  transform: scale(1.05);
+}
+
+/* Placeholder si pas de photo disponible */
+.carte-bar__image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0e6d3;
+}
+
+.carte-bar__emoji-grand {
+  font-size: 4rem;
+}
+
+/* Contenu texte de la carte */
+.carte-bar__contenu {
+  padding: var(--espace-md);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.carte-bar__entete {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--espace-sm);
+}
+
+.carte-bar__nom {
+  font-family: var(--police-titre);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--couleur-texte);
+}
+
+.carte-bar__emoji {
+  font-size: 1.6rem;
+}
+
+.carte-bar__description {
+  font-size: 0.95rem;
+  color: var(--couleur-texte-clair);
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.carte-bar__adresse {
+  font-size: 0.85rem;
+  color: var(--couleur-texte-clair);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   9. BOÎTE À IDÉES
+   Formulaire + contact direct, sur fond sombre.
+   ───────────────────────────────────────────────────────────────── */
+.idees {
+  padding: var(--espace-xl) 0;
+  background-color: var(--couleur-fond-sombre);
+  color: var(--couleur-fond);
+}
+
+.idees__entete {
+  text-align: center;
+  margin-bottom: var(--espace-lg);
+}
+
+.idees__sous-titre {
+  font-size: 1.1rem;
+  color: rgba(253, 246, 236, 0.7);
+}
+
+/* Grille formulaire + contact */
+.idees__grille {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: var(--espace-xl);
+  align-items: start;
+}
+
+/* ── Formulaire ── */
+.formulaire {
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(245, 200, 66, 0.2);
+  border-radius: var(--arrondi-lg);
+  padding: var(--espace-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-md);
+}
+
+.formulaire__groupe {
+  border: none;
+  padding: 0;
+}
+
+.formulaire__legende {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: rgba(253, 246, 236, 0.8);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+
+.formulaire__radio-groupe {
+  display: flex;
+  gap: var(--espace-md);
+  flex-wrap: wrap;
+}
+
+.formulaire__radio {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--couleur-fond);
+}
+
+.formulaire__radio input {
+  accent-color: var(--couleur-accent-jaune);
+  width: 1.1rem;
+  height: 1.1rem;
+  cursor: pointer;
+}
+
+.formulaire__champ {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.formulaire__label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: rgba(253, 246, 236, 0.9);
+}
+
+.formulaire__label span[aria-hidden] {
+  color: var(--couleur-accent-brique);
+}
+
+/* Styles partagés input + textarea */
+.formulaire__input,
+.formulaire__textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--arrondi-sm);
+  border: 2px solid rgba(245, 200, 66, 0.3);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: var(--couleur-fond);
+  font-family: var(--police-corps);
+  font-size: 1rem;
+  transition: border-color var(--transition-rapide), background-color var(--transition-rapide);
+}
+
+.formulaire__input::placeholder,
+.formulaire__textarea::placeholder {
+  color: rgba(253, 246, 236, 0.4);
+}
+
+.formulaire__input:focus,
+.formulaire__textarea:focus {
+  outline: none;
+  border-color: var(--couleur-accent-jaune);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Champ en erreur */
+.formulaire__input.en-erreur,
+.formulaire__textarea.en-erreur {
+  border-color: #e74c3c;
+}
+
+.formulaire__textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.formulaire__aide {
+  font-size: 0.8rem;
+  color: rgba(253, 246, 236, 0.45);
+}
+
+.formulaire__erreur {
+  font-size: 0.85rem;
+  color: #ff7675;
+  min-height: 1.2em; /* Évite le saut de layout quand l'erreur apparaît */
+}
+
+/* Champ honeypot — caché visuellement ET du DOM d'accessibilité */
+.champ-cache {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Messages de confirmation / erreur après envoi */
+.formulaire__confirmation,
+.formulaire__erreur-globale {
+  padding: 1rem;
+  border-radius: var(--arrondi-sm);
+  font-weight: 600;
+  text-align: center;
+}
+
+.formulaire__confirmation {
+  background-color: rgba(39, 174, 96, 0.15);
+  border: 1px solid rgba(39, 174, 96, 0.4);
+  color: #a8e6cf;
+}
+
+.formulaire__erreur-globale {
+  background-color: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  color: #ff7675;
+}
+
+/* ── Contact direct ── */
+.contact-direct {
+  padding: var(--espace-lg);
+  border: 2px dashed rgba(245, 200, 66, 0.4);
+  border-radius: var(--arrondi-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espace-sm);
+  text-align: center;
+  color: rgba(253, 246, 236, 0.8);
+}
+
+.contact-direct__titre {
+  font-family: var(--police-titre);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--couleur-fond);
+}
+
+.contact-direct .bouton--secondaire {
+  align-self: center;
+  border-color: var(--couleur-accent-jaune);
+  color: var(--couleur-accent-jaune);
+}
+
+.contact-direct .bouton--secondaire:hover {
+  background-color: var(--couleur-accent-jaune);
+  color: var(--couleur-texte);
+}
+
+.contact-direct__decoration {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-top: var(--espace-sm);
+  animation: balancement 3s ease-in-out infinite;
+}
+
+@keyframes balancement {
+  0%, 100% { transform: rotate(-2deg); }
+  50%       { transform: rotate(2deg); }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   10. FOOTER
+   ───────────────────────────────────────────────────────────────── */
+.pied-de-page {
+  background-color: var(--couleur-texte);
+  color: rgba(253, 246, 236, 0.7);
+  padding: var(--espace-lg) 0;
+  text-align: center;
+}
+
+.pied-de-page__contenu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.pied-de-page__logo {
+  font-family: var(--police-titre);
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--couleur-accent-jaune);
+}
+
+.pied-de-page__copyright {
+  font-size: 0.9rem;
+}
+
+.pied-de-page__badges {
+  display: flex;
+  gap: var(--espace-md);
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.pied-de-page__contact {
+  color: var(--couleur-accent-jaune);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.pied-de-page__contact:hover {
+  color: var(--couleur-fond);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   11. RESPONSIVE
+   Breakpoints : 900px (tablette), 600px (mobile)
+   ───────────────────────────────────────────────────────────────── */
+
+/* ── Tablette ── */
+@media (max-width: 900px) {
+  .esprit__grille {
+    grid-template-columns: 1fr;
+  }
+
+  .esprit__photo {
+    order: -1; /* Photo avant le texte sur tablette */
+  }
+
+  .idees__grille {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  :root {
+    --espace-md: 1.25rem;
+    --espace-lg: 2.5rem;
+    --espace-xl: 4rem;
+  }
+
+  /* Navigation burger sur mobile */
+  .navigation__burger {
+    display: flex;
+  }
+
+  .navigation__liens {
+    /* Menu caché par défaut sur mobile */
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--couleur-fond);
+    border-bottom: 2px solid var(--couleur-accent-jaune);
+    flex-direction: column;
+    padding: var(--espace-md);
+    gap: 0.5rem;
+    box-shadow: var(--ombre-forte);
+  }
+
+  /* Menu ouvert (classe ajoutée par JS) */
+  .navigation__liens.ouvert {
+    display: flex;
+  }
+
+  .navigation__lien {
+    padding: 0.75rem 1rem;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Hero */
+  .hero__cta {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Grille bars : 1 colonne */
+  .bars__grille {
+    grid-template-columns: 1fr;
+  }
+
+  /* Icônes événements */
+  .esprit__icones {
+    justify-content: center;
+  }
+
+  /* Formulaire */
+  .formulaire {
+    padding: var(--espace-md);
+  }
+
+  .formulaire__radio-groupe {
+    flex-direction: column;
+    gap: var(--espace-sm);
+  }
+}

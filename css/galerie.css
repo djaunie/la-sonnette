@@ -1,0 +1,300 @@
+/*
+ * ═══════════════════════════════════════════════════════════════════
+ * galerie.css — La Sonnette · Section galerie photos
+ * ═══════════════════════════════════════════════════════════════════
+ *
+ * Contient :
+ *  - Mise en page de la galerie (fond sombre, entête)
+ *  - Boutons de filtre par catégorie
+ *  - Grille CSS (masonry simulée avec Grid)
+ *  - Lightbox modale pour agrandir les photos
+ *
+ * Séparé de style.css car la galerie est la section la plus complexe
+ * visuellement et sera étendue en V2 (filtre animé, lightbox avancée).
+ */
+
+
+/* ─────────────────────────────────────────────────────────────────
+   SECTION GALERIE
+   Fond sombre pour faire ressortir les photos.
+   ───────────────────────────────────────────────────────────────── */
+.galerie {
+  padding: var(--espace-xl) 0;
+  background-color: var(--couleur-fond-sombre);
+  color: var(--couleur-fond);
+}
+
+.galerie__entete {
+  text-align: center;
+  margin-bottom: var(--espace-lg);
+}
+
+.galerie__sous-titre {
+  font-size: 1.1rem;
+  color: rgba(253, 246, 236, 0.65);
+  font-style: italic;
+  margin-top: -0.5rem;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   BOUTONS DE FILTRE
+   Filtrent les photos par catégorie d'événement.
+   L'état actif est géré via aria-pressed et la classe .actif.
+   ───────────────────────────────────────────────────────────────── */
+.galerie__filtres {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: var(--espace-lg);
+}
+
+.filtre {
+  /* Bouton de filtre sobre */
+  background-color: transparent;
+  color: rgba(253, 246, 236, 0.7);
+  border: 2px solid rgba(253, 246, 236, 0.25);
+  border-radius: 100px; /* Forme pilule */
+  padding: 0.5rem 1.25rem;
+  font-family: var(--police-corps);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-rapide),
+    border-color var(--transition-rapide),
+    color var(--transition-rapide),
+    transform var(--transition-rapide);
+}
+
+.filtre:hover {
+  border-color: var(--couleur-accent-jaune);
+  color: var(--couleur-accent-jaune);
+  transform: translateY(-2px);
+}
+
+/* Filtre actif */
+.filtre.actif,
+.filtre[aria-pressed="true"] {
+  background-color: var(--couleur-accent-jaune);
+  border-color: var(--couleur-accent-jaune);
+  color: var(--couleur-texte);
+}
+
+.filtre:focus-visible {
+  outline: 3px solid var(--couleur-accent-jaune);
+  outline-offset: 3px;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   GRILLE GALERIE
+   CSS Grid avec colonnes auto-fill pour adapter le nombre de colonnes.
+   Les polaroïds sont définis dans style.css, on gère ici leur
+   positionnement dans la grille.
+   ───────────────────────────────────────────────────────────────── */
+.galerie__grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espace-md);
+  /* Alignement vertical centré pour les polaroïds de hauteurs variables */
+  align-items: start;
+}
+
+/* Items de la grille — chaque item est un polaroïd */
+.galerie__item {
+  /* Transition pour l'animation de filtre (disparition / apparition) */
+  transition:
+    opacity var(--transition-normale),
+    transform var(--transition-normale);
+}
+
+/* Item masqué par le filtre */
+.galerie__item[hidden] {
+  display: none;
+}
+
+/* Animation d'entrée au filtre */
+.galerie__item.entree-filtre {
+  animation: entree-galerie 0.4s ease forwards;
+}
+
+@keyframes entree-galerie {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Sur les grilles plus larges, on peut varier les tailles pour un effet masonry */
+@media (min-width: 900px) {
+  /* Toutes les 7 items, on agrandit un polaroïd pour casser la régularité */
+  .galerie__item:nth-child(7n + 3) {
+    grid-row: span 1;
+  }
+}
+
+
+/* ─────────────────────────────────────────────────────────────────
+   LIGHTBOX
+   Modale fullscreen pour agrandir une photo.
+   Accessibilité :
+   - role="dialog" + aria-modal="true" sur le conteneur
+   - focus piégé dans la modale quand elle est ouverte (voir galerie.js)
+   - Fermeture via Échap
+   - Navigation avec flèches gauche/droite
+   ───────────────────────────────────────────────────────────────── */
+
+/*
+ * IMPORTANT (correctif) : l'attribut HTML `hidden` applique `display:none`,
+ * mais une règle `display:flex`/`block` plus spécifique l'écrase. La lightbox
+ * resterait alors invisible MAIS présente en plein écran (position:fixed,
+ * inset:0) et capterait tous les clics, empêchant d'ouvrir les photos.
+ * On force donc `display:none` tant que l'attribut `hidden` est présent.
+ */
+.lightbox[hidden],
+.lightbox__fond[hidden] {
+  display: none;
+}
+
+/* Fond semi-transparent derrière la lightbox */
+.lightbox__fond {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 200;
+  /* Transition d'apparition */
+  animation: fondu-entree 0.25s ease forwards;
+}
+
+/* Conteneur principal de la lightbox */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 201;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--espace-md);
+  gap: var(--espace-sm);
+  animation: fondu-entree 0.25s ease forwards;
+}
+
+@keyframes fondu-entree {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Zone média (image ou vidéo) */
+.lightbox__media {
+  max-width: 90vw;
+  max-height: 75vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox__media img {
+  max-width: 90vw;
+  max-height: 75vh;
+  object-fit: contain;
+  border-radius: var(--arrondi-sm);
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.8);
+}
+
+/* Légende sous la photo */
+.lightbox__legende {
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+  font-size: 0.95rem;
+  text-align: center;
+  max-width: 600px;
+}
+
+/* Bouton de fermeture */
+.lightbox__fermer {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: var(--couleur-blanc);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-rapide), transform var(--transition-rapide);
+}
+
+.lightbox__fermer:hover,
+.lightbox__fermer:focus-visible {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: rotate(90deg);
+}
+
+/* Boutons de navigation précédent / suivant */
+.lightbox__precedent,
+.lightbox__suivant {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  color: var(--couleur-blanc);
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  font-size: 1.8rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color var(--transition-rapide), transform var(--transition-rapide);
+  line-height: 1;
+}
+
+.lightbox__precedent {
+  left: 1.5rem;
+}
+
+.lightbox__suivant {
+  right: 1.5rem;
+}
+
+.lightbox__precedent:hover,
+.lightbox__precedent:focus-visible {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.lightbox__suivant:hover,
+.lightbox__suivant:focus-visible {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-50%) translateX(3px);
+}
+
+/* Responsive mobile */
+@media (max-width: 600px) {
+  .lightbox__precedent {
+    left: 0.5rem;
+  }
+
+  .lightbox__suivant {
+    right: 0.5rem;
+  }
+
+  .lightbox__media img {
+    max-width: 95vw;
+    max-height: 60vh;
+  }
+}
