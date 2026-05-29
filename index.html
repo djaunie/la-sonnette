@@ -709,51 +709,8 @@
 
         </div>
 
-        <!-- Liste des idées — affichée sous le formulaire, remplie par formulaire.js -->
-        <div class="idees__liste-wrapper apparition" id="idees-liste-wrapper" hidden>
-          <div class="idees__liste-entete">
-            <h3 class="idees__liste-titre">📋 Les idées du moment</h3>
-            <button class="bouton-admin" id="bouton-admin" type="button" aria-label="Mode administration">🔐 Admin</button>
-          </div>
-          <ul class="idees__liste" id="idees-liste" aria-live="polite" aria-label="Liste des idées proposées"></ul>
-        </div>
-
       </div>
     </section>
-
-    <!-- ── Modal mot de passe admin ── -->
-    <div class="admin-modal" id="admin-modal" hidden role="dialog" aria-modal="true" aria-labelledby="admin-modal-titre">
-      <div class="admin-modal__boite">
-        <h2 class="admin-modal__titre" id="admin-modal-titre">🔐 Mode administration</h2>
-        <p class="admin-modal__texte">Mot de passe requis</p>
-        <input type="password" id="admin-mdp" class="admin-modal__input" placeholder="Mot de passe…" autocomplete="current-password" />
-        <span class="admin-modal__erreur" id="admin-mdp-erreur" hidden>Mot de passe incorrect.</span>
-        <div class="admin-modal__actions">
-          <button class="bouton bouton--primaire" id="admin-valider" type="button">Valider</button>
-          <button class="bouton bouton--secondaire" id="admin-annuler" type="button">Annuler</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ── Modal modification d'une idée ── -->
-    <div class="admin-modal" id="modif-modal" hidden role="dialog" aria-modal="true" aria-labelledby="modif-modal-titre">
-      <div class="admin-modal__boite">
-        <h2 class="admin-modal__titre" id="modif-modal-titre">✏️ Modifier l'idée</h2>
-        <input type="hidden" id="modif-index" />
-        <div class="formulaire__champ">
-          <label class="formulaire__label" for="modif-nom">Nom</label>
-          <input type="text" id="modif-nom" class="formulaire__input" maxlength="100" />
-        </div>
-        <div class="formulaire__champ">
-          <label class="formulaire__label" for="modif-description">Description</label>
-          <textarea id="modif-description" class="formulaire__textarea" maxlength="500" rows="3"></textarea>
-        </div>
-        <div class="admin-modal__actions">
-          <button class="bouton bouton--primaire" id="modif-valider" type="button">Enregistrer</button>
-          <button class="bouton bouton--secondaire" id="modif-annuler" type="button">Annuler</button>
-        </div>
-      </div>
-    </div>
 
   </main>
 
